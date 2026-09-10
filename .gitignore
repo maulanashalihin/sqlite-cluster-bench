@@ -1,0 +1,7 @@
+servers/fiber-server
+servers/fiber-pg-server
+data/.*
+*.db
+*.db-wal
+*.db-shm
+data/rep-*.log
