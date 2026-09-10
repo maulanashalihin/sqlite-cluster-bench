@@ -28,17 +28,20 @@ for f in sorted(glob.glob(D + "/*.log")):
                     "min": round(min(vals), 3), "max": round(max(vals), 3)} if vals else None
         e = {"n": len(g), "rps": stats([r["rps"] for r in g if "rps" in r]),
              "ok": sum(r.get("ok", 0) for r in g), "fail": sum(r.get("fail", 0) for r in g)}
-        if isinstance(g[0].get("read"), dict):
-            for op in ("read", "write"):
-                e[op] = {}
+        ops = [k2 for k2, v2 in g[0].items() if isinstance(v2, dict) and k2 not in ("lost_update",)]
+        if ops:
+            for op in ops:
                 vv = defaultdict(list)
                 for r in g:
-                    for p, v in r[op].items():
-                        vv[p].append(v)
+                    for p, v in r.get(op, {}).items():
+                        if isinstance(v, (int, float)):
+                            vv[p].append(v)
                 e[op] = {p: stats(v) for p, v in vv.items()}
         else:
             for p in ("avg_ms", "p50_ms", "p95_ms", "p99_ms", "max_ms"):
                 e[p] = stats([r[p] for r in g if p in r])
+        if isinstance(g[0].get("lost_update"), dict):
+            e["lost_update"] = g[-1]["lost_update"]
         out[name][k] = e
 dest = os.path.join(ROOT, "results", "summary.json")
 json.dump(out, open(dest, "w"), indent=1)

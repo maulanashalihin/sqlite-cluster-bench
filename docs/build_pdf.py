@@ -111,9 +111,14 @@ dead_letter=0; harness tanpa health-check LB fail=17%. Restart: konvergen &le;4 
 <p><b>Kurva node</b> MIX: 27,0k / 28,7k / 34,2k / <b>35,9k</b> / 35,7k (6/5/4/3/2 node).
 Puncak di 3 node; fan-out N&times;(N&minus;1).</p>
 
+<h2>E12. YCSB-A Zipfian + RMW: harga hot row (50/50, 20k ops c50)</h2>
+<p>Hook 3-node: 16,4k rps, RMW p99 20,08ms, <b>lost-update 30,41%</b> &mdash;
+kontrol single: 12,7k rps, <b>14,03%</b>. 14% = balapan read-then-write non-atomik
+(ada di mana pun); ~16% = pajak LWW. Aturan: counter/saldo/stok dilarang multi-writer.</p>
+
 <h2 class="pagebreak">9. Rekomendasi &amp; guardrail</h2>
 <ol>
-<li>SQLite, 1 writer + 3 reader di file yang sama, di-route (E7).</li>
+<li>SQLite, 1 writer + 3 reader di file yang sama, di-route (E7). Hot row (counter/saldo) hanya ke writer.</li>
 <li>Tidak ada penulis kedua &mdash; satu penulis liar mengembalikan p99 34ms.
 Write batch dalam transaksi; busy_timeout 5000; monitor WAL + durasi checkpoint.</li>
 <li>Sadari tradeoff synchronous NORMAL (jendela kecil kehilangan data saat OS crash).</li>

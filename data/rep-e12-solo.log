@@ -1,0 +1,1 @@
+{"mode":"ycsb-a","ports":[4411],"total":20000,"conc":50,"read_pct":50,"zipf_s":0.99,"ms_total":1568.7,"rps":12749.1,"ok":20000,"fail":0,"read":{"n":10011,"p50":2.388,"p95":4.4,"p99":6.173,"max":13.552},"rmw":{"n":9989,"p50":4.841,"p95":8.063,"p99":12.053,"max":19.757},"lost_update":{"hot_rows":50,"attempts":9989,"lost":1401,"lost_pct":14.03}}

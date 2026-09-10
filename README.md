@@ -185,11 +185,26 @@ crash recovery): konvergen penuh ≤4 detik, pending→0, count identik 96.129 �
 Semua titik konvergen penuh, `pending=0`, `dead_letter=0`. Ship fan-out mesh
 N×(N−1): 30→20→12→6→2 stream. Puncak MIX di 3 node; 3 juga minimum HA wajar.
 
+## E12 — YCSB-A Zipfian + RMW: harga hot row (50/50, s=0,99, 2000 rows, 20k ops c50)
+
+| | rps | read p99 | RMW p99 | lost-update |
+|---|---|---|---|---|
+| Hook 3-node | 16,4k | 10,37 | 20,08 | **30,41%** (3050/10031) |
+| Single control | 12,7k | 6,17 | 12,05 | **14,03%** (1401/9989) |
+
+Dekomposisi: 14% = balapan read-then-write non-atomik (ada di node tunggal
+sekalipun, di PG read-committed pun sama) — obatnya `UPDATE ... SET value=value+1`
+atomik. ~16% sisanya = pajak LWW hook-sync (update konkuren ke baris sama dari
+node beda, yang tertua gugur diam-diam). Aturan: **counter/saldo/stok dilarang
+multi-writer** — arahkan ke 1 writer atau atomic op. Klaim "nol loss" E10 hanya
+untuk UUID unik.
+
 ## Batas riset
 
 Run hitungan detik (bukan jam: tanpa data WAL-growth jangka panjang,
 checkpoint storm, fragmentasi); pool 10/worker arbitrer (belum di-sweep);
-payload tunggal 100B; satu mesin 6-CPU; Fiber+SQLite mixed belum diuji.
+payload tunggal 100B; satu mesin 6-CPU; Fiber+SQLite mixed belum diuji;
+Zipfian hanya s=0,99 + RMW counter (tanpa scan/range/transaksi multi-row).
 
 ## Reproduksi
 
