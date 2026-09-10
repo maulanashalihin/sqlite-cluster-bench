@@ -21,8 +21,9 @@ yang tepat untuk aplikasi production read-heavy di single server.
 5. **Postgres tidak punya anomali tail** (MVCC): gap p99 maks ~1.5x, crossover cluster
    baru muncul di konkurensi tinggi (c150).
 6. **Rekomendasi produksi** (read-heavy, single node, vertical-only):
-   **SQLite, 1 proses writer, WAL + synchronous NORMAL + busy_timeout 5000.**
-   Bun single atau Go Fiber+mattn (pilih sesuai kenyamanan tim).
+   **SQLite, 1 writer + 3 reader di file yang sama, di-route (E7).**
+   MIX 40,3k rps (+59% vs single proses), tail write 3,68ms.
+7. Koreksi nuansa: racunnya **multi-writer**, bukan multi-proses.
 
 ![Write p99](charts/write-p99.svg)
 ![Mixed throughput](charts/mixed-rps.svg)
@@ -40,6 +41,7 @@ yang tepat untuk aplikasi production read-heavy di single server.
 | Endpoint | `POST /write` (1 INSERT autocommit), `GET /read?id=` (point lookup) |
 | Harness | [`bench/bench.js`](bench/bench.js) (murni) dan [`bench/mix.js`](bench/mix.js) (campuran 95/5), konkurensi tetap, lapor avg/p50/p95/p99/max + rps |
 | Server | [`servers/`](servers/): `fiber.go` (Fiber+mattn, pool 10), `fiber-pg.go` (Fiber+pgx, pool 10), `bun-server.js` (single/cluster reusePort), `bun-shard.js` (1 worker 1 file), `pg-server.js` (Bun+PG single/cluster) |
+| Harness rute | [`bench/route-bench.js`](bench/route-bench.js) (write→writer, read→round-robin reader), [`bench/hook-bench.js`](bench/hook-bench.js) (mesh multi-port) |
 
 ## E1 — Go Fiber+mattn vs Bun cluster: write terdegradasi di tail (20k req, c50, 5 iterasi)
 
@@ -112,17 +114,34 @@ read. Di backend sama, Fiber single ≈ Bun 6-worker dan 55% di atas Bun single.
 
 U-terbalik: sweet spot 2 worker; selebihnya oversubscribe PG + CPU.
 
+## E7 — Split routed: 1 writer + 3 reader, 1 file (20k, c50, 3 iterasi)
+
+| | rps | read p99 | write p99 |
+|---|---|---|---|
+| MIX 95/5 routed | 40.323 | 4,90 | 3,68 |
+| WRITE via writer | 20.687 | — | 5,14 |
+
+Racunnnya bukan *multi-proses*, melainkan *multi-writer*: read-only di file yang
+sama aman (WAL reader tak blokir writer). Split ini menggabungkan throughput
+read-cluster dengan tail single-writer — dan bom p99 34,7ms cluster tulis-ke-semua
+hilang total. Rute: write hanya ke :writer, read round-robin ke reader
+(client-side, proxy 20-baris, atau split `location` nginx).
+
 ## Rekomendasi produksi (read-heavy, single node, vertical-only)
 
-1. **SQLite, tepat 1 proses writer.** Kelemahan SQLite (tak bisa scale-out) tidak
-   relevan untuk vertical-only.
-2. **Stack: Bun single atau Fiber+mattn** — pilih sesuai kenyamanan tim.
-3. **Guardrail**: write batch dalam transaksi; `busy_timeout=5000`; monitor ukuran
-   WAL + durasi checkpoint (sinyal saturasi write); sadari tradeoff
-   `synchronous=NORMAL` (jendela kecil kehilangan data saat OS crash — jika tak
-   acceptable, pakai FULL atau PG).
-4. **Jalur migrasi ke PG** bila write >~20–30%, butuh failover, atau multi-node:
-   Fiber single atau Bun 2-worker (bukan 6).
+1. **SQLite, tepat 1 proses writer + 2–3 proses reader di file yang sama,
+   di-route** (write→writer, read→round-robin reader). E7: MIX 40,3k rps
+   (+59% vs single proses) dengan tail write 3,68ms. Racunnya multi-writer,
+   bukan multi-proses — reader tidak diblokir writer di WAL.
+2. **Stack: Bun atau Fiber+mattn** — pilih sesuai kenyamanan tim.
+3. **Guardrail kritis**: tidak ada penulis kedua — satu penulis liar
+   mengembalikan p99 34ms. Selain itu: write batch dalam transaksi;
+   `busy_timeout=5000`; monitor ukuran WAL + durasi checkpoint (sinyal saturasi
+   write); sadari tradeoff `synchronous=NORMAL` (jendela kecil kehilangan data
+   saat OS crash — jika tak acceptable, pakai FULL atau PG).
+4. **Jalur scale-out**: hook-sync full-mesh 3 node (≈42k rps MIX, 3 copy
+   sinkron) saat butuh replikasi/HA. **Jalur migrasi ke PG** bila write >~20–30%
+   atau butuh failover relasional: Fiber single atau Bun 2-worker (bukan 6).
 
 ## Batas riset
 

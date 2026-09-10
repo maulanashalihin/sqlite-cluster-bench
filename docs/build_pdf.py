@@ -44,11 +44,11 @@ goroutine, melainkan satu WAL write-lock SQLite: 6 proses berebut gembok lintas-
 <li><b>reusePort obat pintu, bukan dapur</b>: SQLite read +73%, PG c50 &minus;10%.</li>
 <li><b>Sharding (1 worker 1 file)</b>: write +86%, tail rata.</li>
 <li><b>Postgres tanpa anomali tail</b> (gap p99 &le;1,5x); crossover cluster di c150.</li>
-<li><b>Rekomendasi: SQLite, 1 proses writer, WAL + synchronous NORMAL + busy_timeout 5000.</b></li>
+<li><b>Rekomendasi: SQLite, 1 writer + 3 reader di file yang sama, di-route (E7).</b>
+MIX 40,3k rps (+59% vs single proses), tail write 3,68ms.</li>
 </ol>
-
 <h2>2. Metodologi</h2>
-<p class="meta">Mesin 6 CPU / RAM 11,7 GB Ubuntu &middot; Go 1.27.0, Fiber v2.52.9,
+<p class="meta">Mesin uji: OVHcloud Singapore plan VPS-3 (terukur 6 CPU / RAM 11,7 GB Ubuntu) &middot; Go 1.27.0, Fiber v2.52.9,
 mattn/go-sqlite3 v1.14.32 (CGo), pgx v5.11.0 &middot; Bun 1.4.0 &middot; Postgres 18.6 &middot;
 Skema <i>kv(id PK AUTOINCREMENT, val TEXT 100B)</i>, seed 20.000 &middot;
 SQLite: WAL, synchronous NORMAL, busy_timeout 5000 &middot;
@@ -93,12 +93,22 @@ jenuh. Di backend sama, Fiber single &asymp; Bun 6-worker, +55% atas Bun single.
 <p>U-terbalik: 13.119 &rarr; <b>18.049</b> &rarr; 17.611 &rarr; 15.059 rps
 (1/2/4/6 worker; max 50&rarr;210ms). Sweet spot 2 worker.</p>
 
-<h2>7. Rekomendasi &amp; guardrail</h2>
+<h2>7. E7 &mdash; Split routed 1 writer + 3 reader, 1 file (20k, c50, 3 iterasi)</h2>
+<table><tr><th></th><th>rps</th><th>read p99</th><th>write p99</th></tr>
+<tr><td>MIX 95/5 routed</td><td>40.323</td><td>4,90</td><td>3,68</td></tr>
+<tr><td>WRITE via writer</td><td>20.687</td><td>&mdash;</td><td>5,14</td></tr>
+</table>
+<p>Racunnya <b>multi-writer</b>, bukan multi-proses: read-only di file yang sama aman.
+Bom p99 34,7ms hilang total. Rute: write hanya ke writer, read round-robin ke reader.</p>
+
+<h2>8. Rekomendasi &amp; guardrail</h2>
 <ol>
-<li>SQLite, tepat 1 proses writer; Bun single atau Fiber+mattn.</li>
-<li>Write batch dalam transaksi; busy_timeout 5000; monitor ukuran WAL + durasi checkpoint.</li>
+<li>SQLite, 1 writer + 3 reader di file yang sama, di-route (E7).</li>
+<li>Tidak ada penulis kedua &mdash; satu penulis liar mengembalikan p99 34ms.
+Write batch dalam transaksi; busy_timeout 5000; monitor WAL + durasi checkpoint.</li>
 <li>Sadari tradeoff synchronous NORMAL (jendela kecil kehilangan data saat OS crash).</li>
-<li>Migrasi ke PG bila write &gt;20&ndash;30%, butuh failover, atau multi-node:
+<li>Scale-out: hook-sync full-mesh 3 node (&asymp;42k rps MIX, 3 copy sinkron).
+Migrasi ke PG bila write &gt;20&ndash;30% atau butuh failover:
 Fiber single atau Bun 2-worker (bukan 6).</li>
 </ol>
 <p class="meta">Batas riset: run detik (tanpa WAL-growth jangka panjang);
