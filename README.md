@@ -32,7 +32,7 @@ yang tepat untuk aplikasi production read-heavy di single server.
 
 | Aspek | Nilai |
 |---|---|
-| Mesin | 6 CPU, RAM 11.7 GB, Ubuntu |
+| Mesin uji | OVHcloud Singapore, plan VPS-3 (terukur: 6 vCPU, RAM 11,7 GB, Ubuntu) |
 | Go 1.27.0, Fiber v2.52.9, mattn/go-sqlite3 v1.14.32 (CGo), pgx v5.11.0 | |
 | Bun 1.4.0 (`bun:sqlite`, `Bun.SQL`), Postgres 18.6 | |
 | Skema | `kv(id INTEGER PK AUTOINCREMENT, val TEXT 100B)`, seed 20.000 baris |
