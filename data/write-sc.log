@@ -1,0 +1,12 @@
+--- WRITE round 1 single ---
+{"mode":"write","url":"http://127.0.0.1:4103/write","total":20000,"conc":50,"ms_total":1056,"rps":18939.5,"ok":20000,"fail":0,"avg_ms":2.632,"p50_ms":2.307,"p95_ms":4.365,"p99_ms":6.578,"max_ms":22.118}
+--- WRITE round 1 cluster ---
+{"mode":"write","url":"http://127.0.0.1:4102/write","total":20000,"conc":50,"ms_total":1339.5,"rps":14930.6,"ok":20000,"fail":0,"avg_ms":3.317,"p50_ms":0.872,"p95_ms":13.334,"p99_ms":35.252,"max_ms":127.573}
+--- WRITE round 2 single ---
+{"mode":"write","url":"http://127.0.0.1:4103/write","total":20000,"conc":50,"ms_total":971.7,"rps":20582.4,"ok":20000,"fail":0,"avg_ms":2.421,"p50_ms":2.245,"p95_ms":3.955,"p99_ms":5.034,"max_ms":10.232}
+--- WRITE round 2 cluster ---
+{"mode":"write","url":"http://127.0.0.1:4102/write","total":20000,"conc":50,"ms_total":1258.8,"rps":15888.5,"ok":20000,"fail":0,"avg_ms":3.131,"p50_ms":0.63,"p95_ms":12.031,"p99_ms":35.185,"max_ms":190.754}
+--- WRITE round 3 single ---
+{"mode":"write","url":"http://127.0.0.1:4103/write","total":20000,"conc":50,"ms_total":921.2,"rps":21710.6,"ok":20000,"fail":0,"avg_ms":2.297,"p50_ms":2.143,"p95_ms":3.581,"p99_ms":4.855,"max_ms":8.429}
+--- WRITE round 3 cluster ---
+{"mode":"write","url":"http://127.0.0.1:4102/write","total":20000,"conc":50,"ms_total":1261.6,"rps":15853.2,"ok":20000,"fail":0,"avg_ms":3.135,"p50_ms":0.697,"p95_ms":12.643,"p99_ms":34.422,"max_ms":118.785}

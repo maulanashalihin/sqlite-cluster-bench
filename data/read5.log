@@ -1,0 +1,20 @@
+--- READ round 1 fiber ---
+{"mode":"read","url":"http://127.0.0.1:4101/read","total":20000,"conc":50,"ms_total":469,"rps":42644.7,"ok":20000,"fail":0,"avg_ms":1.166,"p50_ms":0.983,"p95_ms":2.699,"p99_ms":4.058,"max_ms":13.945}
+--- READ round 1 bun ---
+{"mode":"read","url":"http://127.0.0.1:4102/read","total":20000,"conc":50,"ms_total":406.5,"rps":49198.2,"ok":20000,"fail":0,"avg_ms":1.011,"p50_ms":0.842,"p95_ms":1.8,"p99_ms":3.224,"max_ms":7.418}
+--- READ round 2 fiber ---
+{"mode":"read","url":"http://127.0.0.1:4101/read","total":20000,"conc":50,"ms_total":410.4,"rps":48732.2,"ok":20000,"fail":0,"avg_ms":1.022,"p50_ms":0.883,"p95_ms":1.915,"p99_ms":3.488,"max_ms":19.816}
+--- READ round 2 bun ---
+{"mode":"read","url":"http://127.0.0.1:4102/read","total":20000,"conc":50,"ms_total":385.6,"rps":51866.7,"ok":20000,"fail":0,"avg_ms":0.959,"p50_ms":0.826,"p95_ms":1.631,"p99_ms":2.785,"max_ms":8.146}
+--- READ round 3 fiber ---
+{"mode":"read","url":"http://127.0.0.1:4101/read","total":20000,"conc":50,"ms_total":446.7,"rps":44774.3,"ok":20000,"fail":0,"avg_ms":1.111,"p50_ms":0.951,"p95_ms":2.299,"p99_ms":4.038,"max_ms":14.401}
+--- READ round 3 bun ---
+{"mode":"read","url":"http://127.0.0.1:4102/read","total":20000,"conc":50,"ms_total":394.3,"rps":50726.9,"ok":20000,"fail":0,"avg_ms":0.981,"p50_ms":0.852,"p95_ms":1.79,"p99_ms":3.255,"max_ms":9.031}
+--- READ round 4 fiber ---
+{"mode":"read","url":"http://127.0.0.1:4101/read","total":20000,"conc":50,"ms_total":406.8,"rps":49162.4,"ok":20000,"fail":0,"avg_ms":1.011,"p50_ms":0.89,"p95_ms":2.085,"p99_ms":3.59,"max_ms":7.581}
+--- READ round 4 bun ---
+{"mode":"read","url":"http://127.0.0.1:4102/read","total":20000,"conc":50,"ms_total":360.7,"rps":55454.1,"ok":20000,"fail":0,"avg_ms":0.898,"p50_ms":0.738,"p95_ms":1.443,"p99_ms":2.7,"max_ms":5.469}
+--- READ round 5 fiber ---
+{"mode":"read","url":"http://127.0.0.1:4101/read","total":20000,"conc":50,"ms_total":433,"rps":46188.3,"ok":20000,"fail":0,"avg_ms":1.078,"p50_ms":0.895,"p95_ms":2.227,"p99_ms":5.138,"max_ms":19.942}
+--- READ round 5 bun ---
+{"mode":"read","url":"http://127.0.0.1:4102/read","total":20000,"conc":50,"ms_total":403.1,"rps":49616,"ok":20000,"fail":0,"avg_ms":1.002,"p50_ms":0.835,"p95_ms":1.742,"p99_ms":2.641,"max_ms":11.59}

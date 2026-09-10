@@ -1,0 +1,12 @@
+--- READ round 1 single ---
+{"mode":"read","url":"http://127.0.0.1:4103/read","total":20000,"conc":50,"ms_total":754.5,"rps":26506.5,"ok":20000,"fail":0,"avg_ms":1.88,"p50_ms":1.736,"p95_ms":3.125,"p99_ms":4.422,"max_ms":8.704}
+--- READ round 1 shard ---
+{"mode":"read","url":"http://127.0.0.1:4104/read","total":20000,"conc":50,"ms_total":406.2,"rps":49240.1,"ok":20000,"fail":0,"avg_ms":1.011,"p50_ms":0.779,"p95_ms":1.684,"p99_ms":4.523,"max_ms":13.652}
+--- READ round 2 single ---
+{"mode":"read","url":"http://127.0.0.1:4103/read","total":20000,"conc":50,"ms_total":705.3,"rps":28357.8,"ok":20000,"fail":0,"avg_ms":1.757,"p50_ms":1.664,"p95_ms":2.873,"p99_ms":3.79,"max_ms":7.226}
+--- READ round 2 shard ---
+{"mode":"read","url":"http://127.0.0.1:4104/read","total":20000,"conc":50,"ms_total":429,"rps":46616.6,"ok":20000,"fail":0,"avg_ms":1.068,"p50_ms":0.854,"p95_ms":1.909,"p99_ms":3.302,"max_ms":12.934}
+--- READ round 3 single ---
+{"mode":"read","url":"http://127.0.0.1:4103/read","total":20000,"conc":50,"ms_total":712.8,"rps":28060.3,"ok":20000,"fail":0,"avg_ms":1.776,"p50_ms":1.662,"p95_ms":3.037,"p99_ms":3.936,"max_ms":7.136}
+--- READ round 3 shard ---
+{"mode":"read","url":"http://127.0.0.1:4104/read","total":20000,"conc":50,"ms_total":460.4,"rps":43444.1,"ok":20000,"fail":0,"avg_ms":1.146,"p50_ms":0.986,"p95_ms":2.195,"p99_ms":3.57,"max_ms":7.446}

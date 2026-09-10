@@ -1,0 +1,8 @@
+--- PG READ c150 single ---
+{"mode":"read","url":"http://127.0.0.1:4105/read","total":15000,"conc":150,"ms_total":1062.5,"rps":14118.2,"ok":15000,"fail":0,"avg_ms":10.571,"p50_ms":9.72,"p95_ms":13.35,"p99_ms":55.888,"max_ms":70.827}
+--- PG READ c150 cluster ---
+{"mode":"read","url":"http://127.0.0.1:4106/read","total":15000,"conc":150,"ms_total":847.1,"rps":17707.6,"ok":15000,"fail":0,"avg_ms":8.414,"p50_ms":6.585,"p95_ms":16.138,"p99_ms":58.84,"max_ms":151.187}
+--- PG WRITE c150 single ---
+{"mode":"write","url":"http://127.0.0.1:4105/write","total":15000,"conc":150,"ms_total":993.8,"rps":15094.2,"ok":15000,"fail":0,"avg_ms":9.875,"p50_ms":9.2,"p95_ms":13.765,"p99_ms":25.272,"max_ms":32.309}
+--- PG WRITE c150 cluster ---
+{"mode":"write","url":"http://127.0.0.1:4106/write","total":15000,"conc":150,"ms_total":846.6,"rps":17718.1,"ok":15000,"fail":0,"avg_ms":8.408,"p50_ms":7.555,"p95_ms":15.976,"p99_ms":26.193,"max_ms":36.317}

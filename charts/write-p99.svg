@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="358" font-family="sans-serif">
+<text x="16" y="30" font-size="17" font-weight="bold">Write p99 (20k req, c50 — lower is better)</text>
+<text x="16" y="84" font-size="13">Fiber+mattn 1 file</text>
+<rect x="250" y="64" width="161" height="30" rx="4" fill="#2563eb"/>
+<text x="413" y="84" font-size="13" font-weight="bold">19.8 ms</text>
+<text x="16" y="128" font-size="13">Bun cluster 6w 1 file</text>
+<rect x="250" y="108" width="288" height="30" rx="4" fill="#dc2626"/>
+<text x="540" y="128" font-size="13" font-weight="bold">35.6 ms</text>
+<text x="16" y="172" font-size="13">Bun single 1 file</text>
+<rect x="250" y="152" width="44" height="30" rx="4" fill="#2563eb"/>
+<text x="296" y="172" font-size="13" font-weight="bold">5.5 ms</text>
+<text x="16" y="216" font-size="13">Bun cluster 6w 6 file</text>
+<rect x="250" y="196" width="42" height="30" rx="4" fill="#2563eb"/>
+<text x="294" y="216" font-size="13" font-weight="bold">5.2 ms</text>
+<text x="16" y="260" font-size="13">PG single</text>
+<rect x="250" y="240" width="55" height="30" rx="4" fill="#2563eb"/>
+<text x="307" y="260" font-size="13" font-weight="bold">6.8 ms</text>
+<text x="16" y="304" font-size="13">PG cluster 6w</text>
+<rect x="250" y="284" width="80" height="30" rx="4" fill="#2563eb"/>
+<text x="332" y="304" font-size="13" font-weight="bold">9.9 ms</text>
+</svg>

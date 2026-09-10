@@ -1,0 +1,12 @@
+--- READ round 1 single ---
+{"mode":"read","url":"http://127.0.0.1:4103/read","total":20000,"conc":50,"ms_total":754.1,"rps":26523.1,"ok":20000,"fail":0,"avg_ms":1.879,"p50_ms":1.696,"p95_ms":3.269,"p99_ms":5.035,"max_ms":10.887}
+--- READ round 1 cluster ---
+{"mode":"read","url":"http://127.0.0.1:4102/read","total":20000,"conc":50,"ms_total":421.8,"rps":47410.3,"ok":20000,"fail":0,"avg_ms":1.049,"p50_ms":0.9,"p95_ms":1.966,"p99_ms":3.391,"max_ms":10.989}
+--- READ round 2 single ---
+{"mode":"read","url":"http://127.0.0.1:4103/read","total":20000,"conc":50,"ms_total":748.9,"rps":26704.7,"ok":20000,"fail":0,"avg_ms":1.867,"p50_ms":1.712,"p95_ms":3.146,"p99_ms":4.577,"max_ms":13.101}
+--- READ round 2 cluster ---
+{"mode":"read","url":"http://127.0.0.1:4102/read","total":20000,"conc":50,"ms_total":409.2,"rps":48879.2,"ok":20000,"fail":0,"avg_ms":1.019,"p50_ms":0.919,"p95_ms":1.806,"p99_ms":3.748,"max_ms":5.732}
+--- READ round 3 single ---
+{"mode":"read","url":"http://127.0.0.1:4103/read","total":20000,"conc":50,"ms_total":678.5,"rps":29474.9,"ok":20000,"fail":0,"avg_ms":1.69,"p50_ms":1.558,"p95_ms":2.942,"p99_ms":3.909,"max_ms":7.184}
+--- READ round 3 cluster ---
+{"mode":"read","url":"http://127.0.0.1:4102/read","total":20000,"conc":50,"ms_total":422.8,"rps":47304.2,"ok":20000,"fail":0,"avg_ms":1.053,"p50_ms":0.929,"p95_ms":1.99,"p99_ms":3.399,"max_ms":10.3}

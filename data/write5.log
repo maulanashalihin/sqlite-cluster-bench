@@ -1,0 +1,20 @@
+--- WRITE round 1 fiber ---
+{"mode":"write","url":"http://127.0.0.1:4101/write","total":20000,"conc":50,"ms_total":1404.6,"rps":14239.1,"ok":20000,"fail":0,"avg_ms":3.462,"p50_ms":2.326,"p95_ms":9.474,"p99_ms":21.108,"max_ms":230.603}
+--- WRITE round 1 bun ---
+{"mode":"write","url":"http://127.0.0.1:4102/write","total":20000,"conc":50,"ms_total":1356.2,"rps":14747.2,"ok":20000,"fail":0,"avg_ms":3.373,"p50_ms":1.08,"p95_ms":11.9,"p99_ms":37.869,"max_ms":130.94}
+--- WRITE round 2 fiber ---
+{"mode":"write","url":"http://127.0.0.1:4101/write","total":20000,"conc":50,"ms_total":1312,"rps":15244,"ok":20000,"fail":0,"avg_ms":3.222,"p50_ms":2.172,"p95_ms":8.814,"p99_ms":19.231,"max_ms":183.335}
+--- WRITE round 2 bun ---
+{"mode":"write","url":"http://127.0.0.1:4102/write","total":20000,"conc":50,"ms_total":1292.3,"rps":15476.1,"ok":20000,"fail":0,"avg_ms":3.163,"p50_ms":0.839,"p95_ms":12.601,"p99_ms":34.139,"max_ms":117.457}
+--- WRITE round 3 fiber ---
+{"mode":"write","url":"http://127.0.0.1:4101/write","total":20000,"conc":50,"ms_total":1345.8,"rps":14861.3,"ok":20000,"fail":0,"avg_ms":3.335,"p50_ms":2.229,"p95_ms":9.056,"p99_ms":19.507,"max_ms":231.42}
+--- WRITE round 3 bun ---
+{"mode":"write","url":"http://127.0.0.1:4102/write","total":20000,"conc":50,"ms_total":1388.7,"rps":14401.6,"ok":20000,"fail":0,"avg_ms":3.439,"p50_ms":1.279,"p95_ms":12.872,"p99_ms":36.163,"max_ms":90.497}
+--- WRITE round 4 fiber ---
+{"mode":"write","url":"http://127.0.0.1:4101/write","total":20000,"conc":50,"ms_total":1347.6,"rps":14841.6,"ok":20000,"fail":0,"avg_ms":3.317,"p50_ms":2.208,"p95_ms":9.133,"p99_ms":19.511,"max_ms":131.391}
+--- WRITE round 4 bun ---
+{"mode":"write","url":"http://127.0.0.1:4102/write","total":20000,"conc":50,"ms_total":1322.4,"rps":15124.1,"ok":20000,"fail":0,"avg_ms":3.29,"p50_ms":1.186,"p95_ms":13.687,"p99_ms":35.051,"max_ms":68.772}
+--- WRITE round 5 fiber ---
+{"mode":"write","url":"http://127.0.0.1:4101/write","total":20000,"conc":50,"ms_total":1429.8,"rps":13988.3,"ok":20000,"fail":0,"avg_ms":3.463,"p50_ms":2.289,"p95_ms":9.735,"p99_ms":19.857,"max_ms":183.607}
+--- WRITE round 5 bun ---
+{"mode":"write","url":"http://127.0.0.1:4102/write","total":20000,"conc":50,"ms_total":1250.2,"rps":15997,"ok":20000,"fail":0,"avg_ms":3.101,"p50_ms":0.799,"p95_ms":11.914,"p99_ms":34.745,"max_ms":107.348}

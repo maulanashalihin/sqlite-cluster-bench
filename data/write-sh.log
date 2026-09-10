@@ -1,0 +1,12 @@
+--- WRITE round 1 single ---
+{"mode":"write","url":"http://127.0.0.1:4103/write","total":20000,"conc":50,"ms_total":964.1,"rps":20745.7,"ok":20000,"fail":0,"avg_ms":2.403,"p50_ms":2.228,"p95_ms":3.923,"p99_ms":5.248,"max_ms":13.403}
+--- WRITE round 1 shard ---
+{"mode":"write","url":"http://127.0.0.1:4104/write","total":20000,"conc":50,"ms_total":612.9,"rps":32629.5,"ok":20000,"fail":0,"avg_ms":1.525,"p50_ms":1.24,"p95_ms":3.219,"p99_ms":6.195,"max_ms":23.117}
+--- WRITE round 2 single ---
+{"mode":"write","url":"http://127.0.0.1:4103/write","total":20000,"conc":50,"ms_total":985,"rps":20303.9,"ok":20000,"fail":0,"avg_ms":2.454,"p50_ms":2.263,"p95_ms":3.973,"p99_ms":5.373,"max_ms":17.409}
+--- WRITE round 2 shard ---
+{"mode":"write","url":"http://127.0.0.1:4104/write","total":20000,"conc":50,"ms_total":433.7,"rps":46119,"ok":20000,"fail":0,"avg_ms":1.08,"p50_ms":0.954,"p95_ms":1.991,"p99_ms":3.628,"max_ms":5.382}
+--- WRITE round 3 single ---
+{"mode":"write","url":"http://127.0.0.1:4103/write","total":20000,"conc":50,"ms_total":905.7,"rps":22081.2,"ok":20000,"fail":0,"avg_ms":2.258,"p50_ms":2.116,"p95_ms":3.419,"p99_ms":4.559,"max_ms":12.308}
+--- WRITE round 3 shard ---
+{"mode":"write","url":"http://127.0.0.1:4104/write","total":20000,"conc":50,"ms_total":519.5,"rps":38496.1,"ok":20000,"fail":0,"avg_ms":1.294,"p50_ms":1.015,"p95_ms":2.675,"p99_ms":5.754,"max_ms":17.596}

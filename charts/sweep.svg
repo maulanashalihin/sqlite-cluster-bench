@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="270" font-family="sans-serif">
+<text x="16" y="30" font-size="17" font-weight="bold">Bun+PG worker scaling, mixed 95/5 (15k req, c50)</text>
+<text x="16" y="84" font-size="13">1 worker</text>
+<rect x="250" y="64" width="209" height="30" rx="4" fill="#2563eb"/>
+<text x="461" y="84" font-size="13" font-weight="bold">13,118.9 rps</text>
+<text x="16" y="128" font-size="13">2 worker</text>
+<rect x="250" y="108" width="288" height="30" rx="4" fill="#dc2626"/>
+<text x="540" y="128" font-size="13" font-weight="bold">18,049.2 rps</text>
+<text x="16" y="172" font-size="13">4 worker</text>
+<rect x="250" y="152" width="281" height="30" rx="4" fill="#2563eb"/>
+<text x="533" y="172" font-size="13" font-weight="bold">17,611.3 rps</text>
+<text x="16" y="216" font-size="13">6 worker</text>
+<rect x="250" y="196" width="240" height="30" rx="4" fill="#2563eb"/>
+<text x="492" y="216" font-size="13" font-weight="bold">15,059.3 rps</text>
+</svg>
