@@ -139,9 +139,51 @@ hilang total. Rute: write hanya ke :writer, read round-robin ke reader
    `busy_timeout=5000`; monitor ukuran WAL + durasi checkpoint (sinyal saturasi
    write); sadari tradeoff `synchronous=NORMAL` (jendela kecil kehilangan data
    saat OS crash — jika tak acceptable, pakai FULL atau PG).
-4. **Jalur scale-out**: hook-sync full-mesh 3 node (≈42k rps MIX, 3 copy
-   sinkron) saat butuh replikasi/HA. **Jalur migrasi ke PG** bila write >~20–30%
-   atau butuh failover relasional: Fiber single atau Bun 2-worker (bukan 6).
+4. **Jalur scale-out**: hook-sync full-mesh 3 node (≈36k rps MIX ber-log, 3 copy
+   sinkron, lag p99 <70ms, heal ≤4 dtk) saat butuh replikasi/HA.
+   **Jalur migrasi ke PG** bila write >~20–30% (lihat envelope E9) atau butuh
+   failover relasional: Fiber single atau Bun 2-worker (bukan 6).
+
+## E8 — Lag replikasi hook-sync 3-node (write→terlihat-di-replika)
+
+| | p50 | p95 | p99 | max | timeout |
+|---|---|---|---|---|---|
+| Idle (500 sampel) | 49,79 | 51,75 | 54,62 | 67,31 | 0 |
+| Under load MIX c30 (200 sampel) | 49,58 | 54,63 | 66,01 | 69,55 | 0 |
+
+Lag = interval batch ship 50ms + antrean apply (~0 idle, ~10–15ms tail saat load).
+SLO: p99 <70ms di box ini.
+
+## E9 — Envelope rasio write: hook-3node vs shared-3w (20k, c50)
+
+| write% | hook rps / p99 | shared-3w rps / p99 |
+|---|---|---|
+| 0 | 39,6k / 6,83 | 49,6k / 3,85 |
+| 5 | 35,9–42,0k / 4,9–7,4 | 46,5k / 3,50 |
+| 20 | 25,3k / 12,0 | 31,2k / 9,66 |
+| 50 | 16,3k / 14,5 | 20,8k / 14,9 (max 109ms) |
+| 100 | 11,2k / 27,2 | 17,0k / 34,7 |
+
+Hook degradasi mulus; shared runtuh di ujung (p99 34,7 + max spike sejak 50%).
+(Skema beda — bandingkan bentuk kurva, bukan digit absolut.)
+
+## E10 — Kill 1 node saat write-load (hook 3-node, 60k req c30)
+Saat n3 di-SIGKILL: n1/n2 tetap melayani (count maju 93.805→96.062), backlog
+`pending` ≈10,4k menumpuk, `dead_letter=0`. Harness tanpa health-check LB:
+`fail=17%` (semua hit ke port mati; p50 survivor 0,96ms). Restart n3 (file sama,
+crash recovery): konvergen penuh ≤4 detik, pending→0, count identik 96.129 —
+**nol data loss**.
+
+## E11 — Kurva jumlah node hook-sync full-mesh (20k, c50, ber-log)
+
+| | 6 node | 5 node | 4 node | 3 node | 2 node |
+|---|---|---|---|---|---|
+| READ rps | 38,6k | 35,2k | 36,5k | 39,6k | 41,9k |
+| WRITE rps | 7,4k | 8,6k | 10,4k | 11,2k | 10,3k |
+| MIX rps | 27,0k | 28,7k | 34,2k | 35,9k | 35,7k |
+
+Semua titik konvergen penuh, `pending=0`, `dead_letter=0`. Ship fan-out mesh
+N×(N−1): 30→20→12→6→2 stream. Puncak MIX di 3 node; 3 juga minimum HA wajar.
 
 ## Batas riset
 

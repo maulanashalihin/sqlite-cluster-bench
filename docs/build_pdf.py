@@ -101,7 +101,17 @@ jenuh. Di backend sama, Fiber single &asymp; Bun 6-worker, +55% atas Bun single.
 <p>Racunnya <b>multi-writer</b>, bukan multi-proses: read-only di file yang sama aman.
 Bom p99 34,7ms hilang total. Rute: write hanya ke writer, read round-robin ke reader.</p>
 
-<h2>8. Rekomendasi &amp; guardrail</h2>
+<h2>8. E8&ndash;E11 hook-sync: lag, envelope, healing, kurva node</h2>
+<p><b>Lag</b> write&rarr;replika (3 node): idle p50 49,79 / p99 54,62ms;
+under-load MIX c30: p50 49,58 / p99 66,01ms; timeout 0. Lag = batch 50ms + antrean apply.</p>
+<p><b>Envelope</b> (rps / p99): hook 5%&rarr;35,9k/7,4, 20%&rarr;25,3k/12,0, 50%&rarr;16,3k/14,5, 100%&rarr;11,2k/27,2 &mdash;
+shared-3w: 46,5k/3,5, 31,2k/9,7, 20,8k/14,9, 17,0k/34,7. Hook mulus, shared runtuh di ujung.</p>
+<p><b>Kill n3</b> saat write-load 60k c30: survivor melayani terus, backlog pending &asymp;10,4k,
+dead_letter=0; harness tanpa health-check LB fail=17%. Restart: konvergen &le;4 dtk, nol loss.</p>
+<p><b>Kurva node</b> MIX: 27,0k / 28,7k / 34,2k / <b>35,9k</b> / 35,7k (6/5/4/3/2 node).
+Puncak di 3 node; fan-out N&times;(N&minus;1).</p>
+
+<h2 class="pagebreak">9. Rekomendasi &amp; guardrail</h2>
 <ol>
 <li>SQLite, 1 writer + 3 reader di file yang sama, di-route (E7).</li>
 <li>Tidak ada penulis kedua &mdash; satu penulis liar mengembalikan p99 34ms.
